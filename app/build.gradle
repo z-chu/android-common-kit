@@ -29,14 +29,15 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.1.0-alpha04'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
+
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
 
 
-    implementation 'com.github.z-chu.android-common-kit:common:-SNAPSHOT'
-    implementation 'com.github.z-chu.android-common-kit:mvp:-SNAPSHOT'
-    implementation 'com.github.z-chu.android-common-kit:models:-SNAPSHOT'
-    implementation 'com.github.z-chu.android-common-kit:base:-SNAPSHOT'
-    implementation 'com.github.z-chu.android-common-kit:listing:-SNAPSHOT'
-    implementation 'com.github.z-chu.android-common-kit:kotlin-bridge:-SNAPSHOT'
+    implementation 'com.github.z-chu.android-common-kit:common:0.1.0'
+    implementation 'com.github.z-chu.android-common-kit:mvp:0.1.0'
+    implementation 'com.github.z-chu.android-common-kit:models:0.1.0'
+    implementation 'com.github.z-chu.android-common-kit:base:0.1.0'
+    implementation 'com.github.z-chu.android-common-kit:listing:0.1.0'
+    implementation 'com.github.z-chu.android-common-kit:kotlin-bridge:0.1.0'
 
 }
