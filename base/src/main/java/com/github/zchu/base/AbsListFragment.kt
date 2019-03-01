@@ -18,15 +18,7 @@ abstract class AbsListFragment<T> : Fragment() {
         super.onActivityCreated(savedInstanceState)
         commonListingView = getListingView(requireContext())
         commonListingView.setAdapter { createAdapter(it) }
-        commonListingView.setOnLoadMoreListener {
-            listViewModel.getListing().value?.loadMore?.invoke()
-        }
-        commonListingView.setOnRefreshListener {
-            listViewModel.getListing().value?.refresh?.invoke()
-        }
-        commonListingView.setOnRetryListener {
-            listViewModel.getListing().value?.retry?.invoke()
-        }
+        commonListingView.bindListingToListener(listViewModel.getListing())
         listViewModel
             .getListing()
             .observe(this, createListingObserver(commonListingView))

@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.LayoutRes
+import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.github.zchu.listing.ListingResource
 import com.github.zchu.listing.ListingView
 import com.github.zchu.stateful.R
 import com.github.zchu.stateful.StatefulView
@@ -264,6 +266,19 @@ open class CommonListingView<M> @JvmOverloads constructor(
 
     fun setErrorView(view: View) {
         statefulView.setErrorView(view)
+    }
+
+}
+
+fun <T> CommonListingView<T>.bindListingToListener(listing: LiveData<ListingResource<T>>) {
+    setOnLoadMoreListener {
+        listing.value?.loadMore?.invoke()
+    }
+    setOnRefreshListener {
+        listing.value?.refresh?.invoke()
+    }
+    setOnRetryListener {
+        listing.value?.retry?.invoke()
     }
 
 }
