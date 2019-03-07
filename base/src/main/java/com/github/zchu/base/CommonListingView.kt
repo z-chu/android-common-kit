@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.annotation.IdRes
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -68,6 +69,7 @@ open class CommonListingView<M> @JvmOverloads constructor(
         }
 
     init {
+        @SuppressLint("CustomViewStyleable")
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.StatefulView)
 
         statefulView.setLoadingLayoutId(typedArray.getResourceId(R.styleable.StatefulView_loadingLayout, View.NO_ID))
@@ -260,12 +262,24 @@ open class CommonListingView<M> @JvmOverloads constructor(
         statefulView.setContentView(view)
     }
 
-    fun setErrorLayoutId(layoutId: Int) {
+    fun setErrorLayoutId(@LayoutRes layoutId: Int) {
         statefulView.setErrorLayoutId(layoutId)
     }
 
     fun setErrorView(view: View) {
         statefulView.setErrorView(view)
+    }
+
+    fun setRetryViewId(@IdRes resId: Int) {
+        statefulView.retryViewId = resId
+    }
+
+    fun setLoadingTextViewId(@IdRes resId: Int) {
+        statefulView.loadingTextViewId = resId
+    }
+
+    fun setErrorTextViewId(@IdRes resId: Int) {
+        statefulView.errorTextViewId = resId
     }
 
 }

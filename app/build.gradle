@@ -33,11 +33,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
 
 
-    implementation 'com.github.z-chu.android-common-kit:common:0.1.0'
-    implementation 'com.github.z-chu.android-common-kit:mvp:0.1.0'
-    implementation 'com.github.z-chu.android-common-kit:models:0.1.0'
-    implementation 'com.github.z-chu.android-common-kit:base:0.1.0'
-    implementation 'com.github.z-chu.android-common-kit:listing:0.1.0'
-    implementation 'com.github.z-chu.android-common-kit:kotlin-bridge:0.1.0'
+    implementation 'com.github.z-chu.android-common-kit:common:0.1.1'
+    implementation 'com.github.z-chu.android-common-kit:mvp:0.1.1'
+    implementation 'com.github.z-chu.android-common-kit:models:0.1.1'
+    implementation 'com.github.z-chu.android-common-kit:base:0.1.1'
+    implementation 'com.github.z-chu.android-common-kit:listing:0.1.1'
+    implementation 'com.github.z-chu.android-common-kit:kotlin-bridge:0.1.1'
 
 }
