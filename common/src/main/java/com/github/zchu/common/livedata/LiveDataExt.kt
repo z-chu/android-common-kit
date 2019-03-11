@@ -1,9 +1,15 @@
 package com.github.zchu.common.livedata
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
-import androidx.lifecycle.Transformations
+import android.os.Looper
+import androidx.lifecycle.*
+
+fun <T> MutableLiveData<T>.safeSetValue(value: T) {
+    if (Looper.getMainLooper().thread === Thread.currentThread()) {
+        setValue(value)
+    } else {
+        postValue(value)
+    }
+}
 
 fun <T, R> LiveData<T>.map(mapper: (T?) -> R?): LiveData<R> = Transformations.map(this, mapper)
 
