@@ -39,9 +39,7 @@ fun FragmentManager.selectFragmentDisplay(
     if (findFragmentByTag == null) {
         beginTransaction.add(containerViewId, block.invoke(tag), tag)
     } else {
-        if (findFragmentByTag.isHidden) {
-            beginTransaction.show(findFragmentByTag)
-        }
+        beginTransaction.show(findFragmentByTag)
     }
     beginTransaction.commit()
 }
