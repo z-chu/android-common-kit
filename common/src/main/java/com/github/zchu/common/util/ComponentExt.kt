@@ -44,3 +44,7 @@ fun FragmentManager.selectFragmentDisplay(
     beginTransaction.commit()
 }
 
+inline fun <T : Fragment> FragmentManager.findOrCreateFragmentByTag(tag: String, block: () -> T): T {
+    return findFragmentByTag(tag) as? T ?: block.invoke()
+}
+

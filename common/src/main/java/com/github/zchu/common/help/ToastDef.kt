@@ -35,7 +35,7 @@ object ToastDef {
         val toast = getToast(context)
         toast.duration = Toast.LENGTH_SHORT
         toast.setText(msg)
-        context?.showToastCompat(toast)
+        toast.showCompat(context)
     }
 
     fun showLong(@StringRes resId: Int, context: Context? = null) {
@@ -49,7 +49,7 @@ object ToastDef {
         val toast = getToast(context)
         toast.setText(msg)
         toast.duration = Toast.LENGTH_LONG
-        context?.showToastCompat(toast)
+        toast.showCompat(context)
     }
 
 
@@ -136,6 +136,15 @@ fun Activity.showToastCompat(toast: Toast) {
             toastCompat.show()
             prevToastCompat = WeakReference(toastCompat)
         }
+    }
+}
+
+@JvmOverloads
+fun Toast.showCompat(context: Context? = null) {
+    if (context is Activity) {
+        context.showToastCompat(this)
+    } else {
+        show()
     }
 }
 
