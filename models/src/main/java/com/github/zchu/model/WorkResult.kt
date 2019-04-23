@@ -4,7 +4,7 @@ sealed class WorkResult<T> {
     var tag: Any? = null
 }
 
-class Loading<T>() : WorkResult<T>()
+class Loading<T>(val canceler: (() -> Unit)? = null) : WorkResult<T>()
 
 class Success<T>(val value: T) : WorkResult<T>()
 
@@ -13,46 +13,38 @@ class Failure<T>(val throwable: Throwable) : WorkResult<T>() {
     constructor(message: String) : this(RuntimeException(message))
 }
 
-
-fun <T> WorkResult<T>.switch(block: WorkResultBridge<T>.() -> Unit) {
-    val bridge = WorkResultBridge<T>().apply(block)
+inline fun <T> WorkResult<T>.switch(
+    onLoading: (Loading<T>) -> Unit = { _ -> },
+    onSuccess: (Success<T>) -> Unit = { _ -> },
+    onFailure: (Failure<T>) -> Unit = { _ -> }
+) {
     when (this) {
-        is Loading<T> -> bridge.onLoading(this)
-        is Success<T> -> bridge.onSuccess(this)
-        is Failure<T> -> bridge.onError(this)
+        is Loading<T> -> onLoading.invoke(this)
+        is Success<T> -> onSuccess.invoke(this)
+        is Failure<T> -> onFailure.invoke(this)
     }
 }
 
-class WorkResultBridge<T> {
-
-    private var _onLoading: ((Loading<T>) -> Unit)? = null
-
-    private var _onSuccess: ((Success<T>) -> Unit)? = null
-
-    private var _onError: ((Failure<T>) -> Unit)? = null
-
-    fun onLoading(block: ((Loading<T>) -> Unit)) {
-        _onLoading = block
+inline fun <T> WorkResult<T>.doOnLoading(
+    onLoading: (Loading<T>) -> Unit = { _ -> }
+) {
+    if (this is Loading<T>) {
+        onLoading.invoke(this)
     }
+}
 
-    fun onSuccess(block: ((Success<T>) -> Unit)) {
-        _onSuccess = block
+inline fun <T> WorkResult<T>.doOnSuccess(
+    onSuccess: (Success<T>) -> Unit = { _ -> }
+) {
+    if (this is Success<T>) {
+        onSuccess.invoke(this)
     }
+}
 
-    fun onError(block: ((Failure<T>) -> Unit)) {
-        _onError = block
+inline fun <T> WorkResult<T>.doOnFailure(
+    onFailure: (Failure<T>) -> Unit = { _ -> }
+) {
+    if (this is Failure<T>) {
+        onFailure.invoke(this)
     }
-
-    internal fun onLoading(value: Loading<T>) {
-        _onLoading?.invoke(value)
-    }
-
-    internal fun onSuccess(value: Success<T>) {
-        _onSuccess?.invoke(value)
-    }
-
-    internal fun onError(value: Failure<T>) {
-        _onError?.invoke(value)
-    }
-
 }

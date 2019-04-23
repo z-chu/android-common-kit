@@ -17,6 +17,44 @@ class WorkState private constructor(
     }
 }
 
+
+inline fun WorkState.switch(
+    onLoading: () -> Unit = { },
+    onSuccess: () -> Unit = { },
+    onFailure: () -> Unit = { }
+) {
+    when (status) {
+        Status.RUNNING -> onLoading.invoke()
+        Status.SUCCEEDED -> onSuccess.invoke()
+        Status.FAILED -> onFailure.invoke()
+    }
+}
+
+inline fun WorkState.doOnLoading(
+    onLoading: () -> Unit = { }
+) {
+    if (status == Status.RUNNING) {
+        onLoading.invoke()
+    }
+}
+
+inline fun WorkState.doOnSuccess(
+    onSuccess: () -> Unit = { }
+) {
+    if (status == Status.SUCCEEDED) {
+        onSuccess.invoke()
+    }
+}
+
+inline fun WorkState.doOnFailure(
+    onFailure: () -> Unit = { }
+) {
+    if (status == Status.FAILED) {
+        onFailure.invoke()
+    }
+}
+
+
 /**
  * 当状态不相等时才进行下发value
  */
