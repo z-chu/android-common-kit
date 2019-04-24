@@ -4,7 +4,7 @@ sealed class WorkResult<T> {
     var tag: Any? = null
 }
 
-class Loading<T>(val canceler: (() -> Unit)? = null) : WorkResult<T>()
+class Loading<T>(var canceler: (() -> Unit)? = null) : WorkResult<T>()
 
 class Success<T>(val value: T) : WorkResult<T>()
 
