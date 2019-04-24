@@ -7,23 +7,24 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
-/**
- * Retrieve argument from Activity intent
- */
-fun <T : Any> Activity.argument(key: String, defaultValue: T? = null) =
+
+fun <T : Any> Activity.bindExtra(key: String, defaultValue: T? = null) =
     lazy {
         intent.extras?.get(key) as? T ?: defaultValue
         ?: error("Intent Argument $key is missing")
     }
 
+fun <T : Any> Activity.extra(key: String, defaultValue: T? = null) =
+    intent.extras?.get(key) as? T ?: defaultValue
 
-/**
- * Retrieve argument from Fragment intent
- */
-fun <T : Any> Fragment.argument(key: String, defaultValue: T? = null) =
+fun <T : Any> Fragment.bindArgument(key: String, defaultValue: T? = null) =
     lazy {
         arguments?.get(key) as? T ?: defaultValue ?: error("Intent Argument $key is missing")
     }
+
+fun <T : Any> Fragment.argument(key: String, defaultValue: T? = null) =
+    arguments?.get(key) as? T ?: defaultValue
+
 
 fun FragmentManager.selectFragmentDisplay(
     @IdRes containerViewId: Int, tag: String,
