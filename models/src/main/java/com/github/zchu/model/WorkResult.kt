@@ -1,6 +1,7 @@
 package com.github.zchu.model
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 
 sealed class WorkResult<T> {
     var tag: Any? = null
@@ -52,3 +53,5 @@ inline fun <T> WorkResult<T>.doOnFailure(
 }
 
 typealias LiveResult<T> = LiveData<WorkResult<T>>
+
+typealias MutableLiveResult<T> = MutableLiveData<WorkResult<T>>
