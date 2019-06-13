@@ -8,23 +8,37 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
 
-fun <T : Any> Activity.bindExtra(key: String, defaultValue: T? = null) =
+fun <T : Any> Activity.bindExtra(key: String, defaultValue: T) =
     lazy {
         intent.extras?.get(key) as? T ?: defaultValue
-        ?: error("Intent Argument $key is missing")
     }
 
-fun <T : Any> Activity.extra(key: String, defaultValue: T? = null) =
+fun <T : Any> Activity.bindExtra(key: String) =
+    lazy {
+        intent.extras?.get(key) as? T
+    }
+
+fun <T : Any> Activity.extra(key: String, defaultValue: T) =
     intent.extras?.get(key) as? T ?: defaultValue
 
-fun <T : Any> Fragment.bindArgument(key: String, defaultValue: T? = null) =
+fun <T : Any> Activity.extra(key: String) =
+    intent.extras?.get(key) as? T
+
+fun <T : Any> Fragment.bindArgument(key: String, defaultValue: T) =
     lazy {
-        arguments?.get(key) as? T ?: defaultValue ?: error("Intent Argument $key is missing")
+        arguments?.get(key) as? T ?: defaultValue
     }
 
-fun <T : Any> Fragment.argument(key: String, defaultValue: T? = null) =
+fun <T : Any> Fragment.bindArgument(key: String) =
+    lazy {
+        arguments?.get(key) as? T
+    }
+
+fun <T : Any> Fragment.argument(key: String, defaultValue: T) =
     arguments?.get(key) as? T ?: defaultValue
 
+fun <T : Any> Fragment.argument(key: String) =
+    arguments?.get(key) as? T
 
 fun FragmentManager.selectFragmentDisplay(
     @IdRes containerViewId: Int, tag: String,
