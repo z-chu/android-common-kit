@@ -7,7 +7,6 @@ import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 
-
 fun <T : Any> Activity.bindExtra(key: String, defaultValue: T) =
     lazy {
         intent.extras?.get(key) as? T ?: defaultValue
@@ -15,14 +14,24 @@ fun <T : Any> Activity.bindExtra(key: String, defaultValue: T) =
 
 fun <T : Any> Activity.bindExtra(key: String) =
     lazy {
-        intent.extras?.get(key) as? T
+        intent.extras?.get(key) as? T ?: error("Intent Argument $key is missing")
+    }
+
+fun <T : Any> Activity.bindExtraOptional(key: String, defaultValue: T? = null) =
+    lazy {
+        intent.extras?.get(key) as? T ?: defaultValue
     }
 
 fun <T : Any> Activity.extra(key: String, defaultValue: T) =
     intent.extras?.get(key) as? T ?: defaultValue
 
 fun <T : Any> Activity.extra(key: String) =
+    intent.extras?.get(key) as? T ?: error("Intent Argument $key is missing")
+
+
+fun <T : Any> Activity.extraOptional(key: String) =
     intent.extras?.get(key) as? T
+
 
 fun <T : Any> Fragment.bindArgument(key: String, defaultValue: T) =
     lazy {
@@ -31,13 +40,21 @@ fun <T : Any> Fragment.bindArgument(key: String, defaultValue: T) =
 
 fun <T : Any> Fragment.bindArgument(key: String) =
     lazy {
-        arguments?.get(key) as? T
+        arguments?.get(key) as? T ?: error("Intent Argument $key is missing")
+    }
+
+fun <T : Any> Fragment.bindArgumentOptional(key: String, defaultValue: T? = null) =
+    lazy {
+        arguments?.get(key) as? T ?: defaultValue
     }
 
 fun <T : Any> Fragment.argument(key: String, defaultValue: T) =
     arguments?.get(key) as? T ?: defaultValue
 
 fun <T : Any> Fragment.argument(key: String) =
+    arguments?.get(key) as? T ?: error("Intent Argument $key is missing")
+
+fun <T : Any> Fragment.argumentOptional(key: String) =
     arguments?.get(key) as? T
 
 fun FragmentManager.selectFragmentDisplay(
