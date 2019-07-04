@@ -3,6 +3,7 @@ package com.github.zchu.common.help
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.view.ContextThemeWrapper
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.annotation.StringRes
@@ -65,14 +66,17 @@ object ToastDef {
         defaultContext = context
         return if (context != null) {
             Toast.makeText(
-                context,
+                ContextThemeWrapper(context, android.R.style.Theme_Light),
                 "",
                 Toast.LENGTH_SHORT
             )
         } else {
             defaultToast.defaultIfNull {
                 val makeText = Toast.makeText(
-                    defaultContext.requireNonNull("At least one of Context and defaultContext is not null"),
+                    ContextThemeWrapper(
+                        defaultContext.requireNonNull("At least one of Context and defaultContext is not null"),
+                        android.R.style.Theme_Light
+                    ),
                     "",
                     Toast.LENGTH_SHORT
                 )
