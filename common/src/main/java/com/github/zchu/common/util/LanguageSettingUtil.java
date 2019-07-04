@@ -60,14 +60,36 @@ public class LanguageSettingUtil implements SharedPreferences.OnSharedPreference
 
     public static void changeAppLanguage(Context context, Locale locale) {
         Resources resources = context.getResources();
-        DisplayMetrics metrics = resources.getDisplayMetrics();
-        Configuration configuration = resources.getConfiguration();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            configuration.setLocale(locale);
-        } else {
-            configuration.locale = locale;
+        Configuration config = resources.getConfiguration();
+        Locale contextLocale = config.locale;
+        if (equals(contextLocale.getLanguage(), locale.getLanguage())
+                && equals(contextLocale.getCountry(), locale.getCountry())) {
+            return;
         }
-        resources.updateConfiguration(configuration, metrics);
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            config.setLocale(locale);
+            context.createConfigurationContext(config);
+        } else {
+            config.locale = locale;
+        }
+        resources.updateConfiguration(config, dm);
+    }
+
+    private static boolean equals(final CharSequence s1, final CharSequence s2) {
+        if (s1 == s2) return true;
+        int length;
+        if (s1 != null && s2 != null && (length = s1.length()) == s2.length()) {
+            if (s1 instanceof String && s2 instanceof String) {
+                return s1.equals(s2);
+            } else {
+                for (int i = 0; i < length; i++) {
+                    if (s1.charAt(i) != s2.charAt(i)) return false;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     public static String getSystemLanguage(Locale locale) {
