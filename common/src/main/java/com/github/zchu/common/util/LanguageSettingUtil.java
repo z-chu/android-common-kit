@@ -34,7 +34,6 @@ public class LanguageSettingUtil implements SharedPreferences.OnSharedPreference
         liveData = new MutableLiveData<>();
         mPreferences.registerOnSharedPreferenceChangeListener(this);
         liveData.setValue(getLanguageType());
-        LanguageSettingUtil.setApplicationLanguage(context, getLanguageLocale());
     }
 
     public static void init(Context mContext) {
