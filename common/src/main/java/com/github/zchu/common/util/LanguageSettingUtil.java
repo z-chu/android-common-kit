@@ -76,6 +76,27 @@ public class LanguageSettingUtil implements SharedPreferences.OnSharedPreference
         resources.updateConfiguration(config, dm);
     }
 
+
+    public static void setApplicationLanguage(Context context) {
+        setApplicationLanguage(context, getInstance().getLanguageLocale());
+    }
+
+    public static void setApplicationLanguage(Context context, Locale locale) {
+        Resources resources = context.getApplicationContext().getResources();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        Configuration config = resources.getConfiguration();
+        config.locale = locale;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            LocaleList localeList = new LocaleList(locale);
+            LocaleList.setDefault(localeList);
+            config.setLocales(localeList);
+            context.getApplicationContext().createConfigurationContext(config);
+            Locale.setDefault(locale);
+        }
+        resources.updateConfiguration(config, dm);
+    }
+
+
     private static boolean equals(final CharSequence s1, final CharSequence s2) {
         if (s1 == s2) return true;
         int length;
