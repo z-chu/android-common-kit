@@ -34,10 +34,18 @@ class ProgressDialogHandler(dialog: Dialog) {
             val dialog = dialogWeakReference.get()
             when (msg.what) {
                 SHOW_PROGRESS_DIALOG -> if (dialog != null && !dialog.isShowing) {
-                    dialog.show()
+                    try {
+                        dialog.show()
+                    } catch (t: Throwable) {
+                        t.printStackTrace()
+                    }
                 }
                 DISMISS_PROGRESS_DIALOG -> if (dialog != null && dialog.isShowing) {
-                    dialog.dismiss()
+                    try {
+                        dialog.dismiss()
+                    } catch (t: Throwable) {
+                        t.printStackTrace()
+                    }
                 }
             }
         }
