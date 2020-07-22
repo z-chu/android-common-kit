@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.util.ObjectsCompat;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 public abstract class SelectionCommonAdapter<T> extends CommonAdapter<T> {
@@ -20,7 +22,7 @@ public abstract class SelectionCommonAdapter<T> extends CommonAdapter<T> {
     }
 
     @Override
-    protected void convert(CommonViewHolder helper, T item) {
+    protected void convert(@NotNull CommonViewHolder helper, T item) {
         convert(helper, item, getItemSelected(helper, item));
     }
 
@@ -32,22 +34,22 @@ public abstract class SelectionCommonAdapter<T> extends CommonAdapter<T> {
 
 
     public int getSelectedPosition() {
-        return mData.indexOf(selectedItem);
+        return getData().indexOf(selectedItem);
     }
 
 
     public void setSelectedAdapterPosition(int selectedPosition, boolean isNotifyListener) {
-        if (selectedPosition < 0 || selectedPosition >= mData.size()) {
+        if (selectedPosition < 0 || selectedPosition >= getData().size()) {
             return;
         }
-        T newItem = mData.get(selectedPosition);
+        T newItem = getData().get(selectedPosition);
         if (ObjectsCompat.equals(this.selectedItem, newItem)) {
             return;
         }
 
         T oldItem = this.selectedItem;
-        int oldPosition = mData.indexOf(oldItem);
-        boolean hasOld = oldPosition > -1 && oldPosition < mData.size() + getHeaderLayoutCount();
+        int oldPosition = getData().indexOf(oldItem);
+        boolean hasOld = oldPosition > -1 && oldPosition < getData().size() + getHeaderLayoutCount();
         this.selectedItem = newItem;
         onSelectedItem(hasOld ? oldItem : null, newItem);
 
@@ -56,7 +58,7 @@ public abstract class SelectionCommonAdapter<T> extends CommonAdapter<T> {
                 onSelectedItemListener.onSelectedItem(this, hasOld ? oldPosition : null, selectedPosition);
             }
         }
-        if (selectedPosition < mData.size() + getHeaderLayoutCount()) {
+        if (selectedPosition < getData().size() + getHeaderLayoutCount()) {
             notifyItemChanged(selectedPosition + getHeaderLayoutCount());
         } else {
             notifyDataSetChanged();
@@ -67,7 +69,7 @@ public abstract class SelectionCommonAdapter<T> extends CommonAdapter<T> {
     }
 
     public void setSelectedItem(T newItem, boolean isNotifyListener) {
-        setSelectedAdapterPosition(mData.indexOf(newItem), isNotifyListener);
+        setSelectedAdapterPosition(getData().indexOf(newItem), isNotifyListener);
     }
 
 
@@ -97,7 +99,7 @@ public abstract class SelectionCommonAdapter<T> extends CommonAdapter<T> {
     }
 
     public interface OnSelectedItemListener {
-        void onSelectedItem(SelectionCommonAdapter adapter, @Nullable Integer oldPosition, int newPosition);
+        void onSelectedItem(@NonNull SelectionCommonAdapter<?> adapter, @Nullable Integer oldPosition, int newPosition);
     }
 
 

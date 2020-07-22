@@ -2,7 +2,7 @@ package com.github.zchu.base
 
 import android.view.View
 import androidx.annotation.IdRes
-import com.chad.library.adapter.base.BaseViewHolder
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
 /**
  * Created by zchu on 16-12-1.
@@ -11,7 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 
 open class CommonViewHolder(view: View) : BaseViewHolder(view) {
 
-    fun setSelected(@IdRes viewId: Int, selected: Boolean): CommonViewHolder {
+    open fun setSelected(@IdRes viewId: Int, selected: Boolean): CommonViewHolder {
         getView<View>(viewId).isSelected = selected
         return this
     }

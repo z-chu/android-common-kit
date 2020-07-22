@@ -16,41 +16,10 @@ class ExampleUnitTest {
 
     @Test
     fun viewDataCheck() {
-        val arrayListOf = arrayListOf(
-            ViewData.loading("asasd"),
-            ViewData.loading("asasd"),
-            ViewData.loaded("asasd"),
-            ViewData.loading("asasd"),
-            ViewData.loaded("asasd"),
-            ViewData.loading("asasd"),
-            ViewData.error(null, "asasd"),
-            ViewData.loading("asasd")
-
-        )
-        for (viewData in arrayListOf) {
-            check(viewData)
-        }
 
 
     }
 
 
-    fun check(viewData: ViewData<*>) {
-        viewData.whenRun {
-            onLoading {
-                assertEquals(viewData.workState.status, Status.RUNNING)
-            }
 
-            onError { throwable, any ->
-                assertEquals(viewData.workState.status, Status.FAILED)
-
-            }
-
-            onSuccess {
-                assertEquals(viewData.workState.status, Status.SUCCEEDED)
-
-            }
-        }
-
-    }
 }

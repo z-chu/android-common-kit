@@ -2,6 +2,7 @@ package com.github.zchu.common.util;
 
 import android.os.Handler;
 import android.os.Looper;
+
 import androidx.annotation.NonNull;
 
 import java.util.concurrent.Executor;
@@ -11,6 +12,10 @@ public class MainThreadExecutor implements Executor {
 
     @Override
     public void execute(@NonNull Runnable command) {
-        mainThreadHandle.post(command);
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            command.run();
+        } else {
+            mainThreadHandle.post(command);
+        }
     }
 }
