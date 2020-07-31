@@ -1,8 +1,8 @@
 package com.github.zchu.common.rx
 
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
-import io.reactivex.internal.disposables.DisposableContainer
+import io.reactivex.rxjava3.disposables.CompositeDisposable
+import io.reactivex.rxjava3.disposables.Disposable
+import io.reactivex.rxjava3.disposables.DisposableContainer
 import java.util.*
 
 class KeepLastDisposable

@@ -1,9 +1,9 @@
 package com.github.zchu.common.rx
 
 import android.util.Log
-import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.functions.Function
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.ObservableSource
+import io.reactivex.rxjava3.functions.Function
 import java.util.concurrent.TimeUnit
 
 
